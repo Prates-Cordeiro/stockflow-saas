@@ -1,8 +1,6 @@
 # stockflow-saas
 Multi-tenant inventory management SaaS built with Next.js, TypeScript, Supabase and Stripe.
 
-# StockFlow SaaS
-
 Sistema de Gestão de Estoque SaaS desenvolvido para empresas que precisam controlar entradas, saídas, transferências e movimentações de produtos em múltiplos locais.
 
 ## 📋 Sobre o Projeto
