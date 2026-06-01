@@ -1,0 +1,31 @@
+# CODEOWNERS — StockFlow SaaS
+#
+# Each pull request that touches a path matched below automatically
+# requests review from the listed owners. The first matching rule wins,
+# so order matters — most specific patterns at the bottom.
+#
+# Syntax: https://docs.github.com/en/repositories/managing-your-repositories-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything not matched by a more specific rule.
+*                       @Tcordeir0 @RafhaellPrates
+
+# CI, governance and tooling
+/.github/               @Tcordeir0
+/.husky/                @Tcordeir0
+/package.json           @Tcordeir0
+/commitlint.config.cjs  @Tcordeir0
+/release-please-config.json   @Tcordeir0
+/.release-please-manifest.json @Tcordeir0
+
+# Documentation
+/README.md              @Tcordeir0 @RafhaellPrates
+/CONTRIBUTING.md        @Tcordeir0
+/SECURITY.md            @Tcordeir0
+/CODE_OF_CONDUCT.md     @Tcordeir0
+/AGENTS.md              @Tcordeir0
+
+# Web app (Next.js) — to be created
+/apps/web/              @Tcordeir0 @RafhaellPrates
+
+# Database — Supabase migrations and policies
+/supabase/              @Tcordeir0

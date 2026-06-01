@@ -1,160 +1,119 @@
-# stockflow-saas
-Multi-tenant inventory management SaaS built with Next.js, TypeScript, Supabase and Stripe.
+# StockFlow
 
-Sistema de Gestão de Estoque SaaS desenvolvido para empresas que precisam controlar entradas, saídas, transferências e movimentações de produtos em múltiplos locais.
+> Multi-tenant inventory management SaaS built with Next.js, TypeScript, Supabase and Stripe.
 
-## 📋 Sobre o Projeto
+StockFlow is a Software-as-a-Service platform for warehouses, depots, retail stores and e-commerce operations that need real-time stock control across multiple locations, with full movement traceability and centralised management.
 
-O StockFlow é uma plataforma SaaS (Software as a Service) criada para atender armazéns, almoxarifados, lojas físicas e operações de e-commerce.
+## Status
 
-O sistema permite que empresas tenham controle total sobre seu estoque em tempo real, com rastreabilidade das movimentações e gestão centralizada.
+🚧 Early stage — initial governance and tooling. No application code yet.
 
-## 🚀 Funcionalidades
+## Tech stack
 
-### MVP
+| Layer | Choice |
+|---|---|
+| Frontend | Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui |
+| Backend | Next.js API Routes / Server Actions, TypeScript |
+| Database | PostgreSQL via Supabase, with Row-Level Security (RLS) |
+| Auth | Supabase Auth |
+| Payments | Stripe (subscriptions, trial, billing portal) |
+| Hosting | Vercel |
 
-* Cadastro de empresas
-* Autenticação de usuários
-* Controle de permissões
-* Cadastro de produtos
-* Cadastro de locais de armazenamento
-* Entradas de estoque
-* Saídas de estoque
-* Controle de saldo por local
-* Alertas de estoque mínimo
-* Dashboard operacional
+## Multi-tenancy model
 
-### Futuras Funcionalidades
+Each tenant (company) has fully isolated:
 
-* Transferências entre locais
-* Leitor de código de barras
-* Relatórios avançados
-* Importação via CSV
-* Cadastro de fornecedores
-* Ordens de compra
-* API pública
-* Aplicativo mobile
+- Users and roles
+- Products and stock locations
+- Movements and balances
+- Stripe subscription
 
-## 🏗️ Arquitetura
+Isolation is enforced at the database layer through **Supabase Row-Level Security** policies keyed on `tenant_id`. No tenant ever sees another tenant's rows, regardless of API path.
 
-O sistema segue uma arquitetura multi-tenant, permitindo que várias empresas utilizem a mesma aplicação com isolamento completo de dados.
+## Roadmap
 
-Cada empresa possui:
+### Phase 0 — Foundation
+- [ ] Repository governance and CI tooling (this PR)
+- [ ] Next.js scaffold
+- [ ] Supabase project + base schema
+- [ ] Authentication
+- [ ] Tenant onboarding
+- [ ] Stripe subscription with free trial
 
-* Usuários próprios
-* Produtos próprios
-* Movimentações próprias
-* Locais próprios
-* Assinatura própria
+### Phase 1 — MVP
+- [ ] Products
+- [ ] Locations
+- [ ] Stock movements (in / out)
+- [ ] Per-location balance
+- [ ] Operational dashboard
+- [ ] Minimum-stock alerts
 
-## 🛠️ Tecnologias
+### Phase 2 — Operations
+- [ ] Inter-location transfers
+- [ ] Barcode reader
+- [ ] Reports
+- [ ] CSV import
 
-### Front-end
+### Phase 3 — Expansion
+- [ ] Suppliers
+- [ ] Purchase orders
+- [ ] Public API
+- [ ] Mobile app
 
-* Next.js
-* TypeScript
-* Tailwind CSS
-* shadcn/ui
+## Security
 
-### Back-end
+- Multi-tenant isolation via Supabase RLS policies
+- Role-based access control inside each tenant
+- Encrypted Supabase Auth sessions
+- No customer data leaves the row owner's tenant scope at the database layer
+- Stripe customer data handled only through Stripe SDK; PCI handled by Stripe
 
-* Next.js API Routes
-* TypeScript
+If you discover a security issue, please follow [SECURITY.md](./SECURITY.md). Do not open a public issue.
 
-### Banco de Dados
+## Development
 
-* PostgreSQL
-* Supabase
-* Row Level Security (RLS)
+### Prerequisites
 
-### Pagamentos
+- Node.js 22+
+- npm 10+ (or pnpm, decided at scaffold time)
 
-* Stripe
+### Setup
 
-### Hospedagem
+```bash
+git clone https://github.com/Prates-Cordeiro/stockflow-saas.git
+cd stockflow-saas
+npm install
+```
 
-* Vercel
+Husky commit hooks install automatically via `prepare` script and enforce [Conventional Commits](https://www.conventionalcommits.org/) on every commit.
 
-## 📊 Modelo de Dados
+### Commit conventions
 
-### Empresas
+Conventional Commits with these types: `feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, `security`, `revert`. Scopes match the workspace area you touch (`web`, `db`, `auth`, `billing`, `ci`, etc.). See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full conventions.
 
-Representa os clientes da plataforma.
+## Releases
 
-### Usuários
+Automated via [release-please](https://github.com/googleapis/release-please). Merging a `feat:` or `fix:` commit on `main` opens a release PR; merging that PR cuts a new GitHub Release and tag.
 
-Controle de acesso e permissões.
+## Project structure
 
-### Produtos
+```
+stockflow-saas/
+├── .github/           CI workflows, templates, Dependabot
+├── .husky/            Local git hooks
+├── apps/              (future) Next.js app(s)
+├── packages/          (future) shared packages
+├── supabase/          (future) migrations, policies, seed
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── LICENSE            MIT
+└── README.md          you are here
+```
 
-Cadastro completo dos itens do estoque.
+## License
 
-### Locais
+MIT — see [LICENSE](./LICENSE).
 
-Armazéns, depósitos, lojas ou prateleiras.
+## Authors
 
-### Movimentações
-
-Registro imutável de:
-
-* Entrada
-* Saída
-* Transferência
-* Ajuste
-
-### Saldos
-
-Quantidade atual de cada produto por local.
-
-### Assinaturas
-
-Controle de planos, cobrança e período de teste.
-
-## 🔒 Segurança
-
-* Multi-tenancy
-* Row Level Security (RLS)
-* Controle de permissões por função
-* Isolamento de dados entre empresas
-* Autenticação segura
-
-## 📈 Roadmap
-
-### Fase 0 - Fundação
-
-* [ ] Autenticação
-* [ ] Multiempresa
-* [ ] Controle de assinaturas
-* [ ] Trial gratuito
-
-### Fase 1 - MVP
-
-* [ ] Produtos
-* [ ] Locais
-* [ ] Movimentações
-* [ ] Dashboard
-* [ ] Alertas
-
-### Fase 2 - Operação
-
-* [ ] Código de barras
-* [ ] Transferências
-* [ ] Relatórios
-* [ ] Importação CSV
-
-### Fase 3 - Expansão
-
-* [ ] Fornecedores
-* [ ] Compras
-* [ ] API
-* [ ] Mobile
-
-## 🎯 Objetivo
-
-Fornecer uma solução simples, escalável e acessível para gestão de estoque, utilizando um modelo SaaS baseado em assinatura recorrente.
-
-## Software Engenieers
-
-Tcordeir0 and RafhaellPrates
-
-Projeto em desenvolvimento.
+Built by [@Tcordeir0](https://github.com/Tcordeir0) (Talys Cordeiro) and [@RafhaellPrates](https://github.com/RafhaellPrates) (Rafhael Prates) under the **Prates & Cordeiro** organisation.

@@ -1,0 +1,37 @@
+* text=auto eol=lf
+
+# Documentation
+*.md          text diff=markdown
+*.mdx         text diff=markdown
+
+# Source
+*.ts          text
+*.tsx         text
+*.js          text
+*.jsx         text
+*.json        text
+*.css         text
+*.scss        text
+*.html        text
+*.yml         text
+*.yaml        text
+*.sql         text
+
+# Lockfiles — line-by-line diff is the readable diff
+package-lock.json -diff
+pnpm-lock.yaml    -diff
+yarn.lock         -diff
+
+# Binary
+*.png         binary
+*.jpg         binary
+*.jpeg        binary
+*.gif         binary
+*.webp        binary
+*.ico         binary
+*.svg         text
+*.pdf         binary
+*.woff        binary
+*.woff2       binary
+*.ttf         binary
+*.otf         binary
