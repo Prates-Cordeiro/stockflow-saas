@@ -28,9 +28,6 @@ jobs:
   typecheck:
     name: TypeScript type-check
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,12 +37,12 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: apps/web/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Skip if web app not yet scaffolded
         id: skip-check
         run: |
-          if [ ! -f package.json ]; then
+          if [ ! -f apps/web/package.json ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "apps/web is not yet scaffolded, skipping"
           else
@@ -58,14 +55,11 @@ jobs:
 
       - name: Run tsc
         if: steps.skip-check.outputs.skip == 'false'
-        run: npm run typecheck
+        run: npm run typecheck --workspace=web
 
   lint:
     name: ESLint
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -75,12 +69,12 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: apps/web/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Skip if web app not yet scaffolded
         id: skip-check
         run: |
-          if [ ! -f package.json ]; then
+          if [ ! -f apps/web/package.json ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
@@ -92,4 +86,4 @@ jobs:
 
       - name: Run ESLint
         if: steps.skip-check.outputs.skip == 'false'
-        run: npm run lint
+        run: npm run lint --workspace=web

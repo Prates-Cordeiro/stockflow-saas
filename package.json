@@ -2,6 +2,10 @@
   "name": "stockflow-saas-root",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "description": "Root tooling for the StockFlow SaaS monorepo: husky + commitlint. The Next.js app lives under apps/ once scaffolded.",
   "scripts": {
     "prepare": "husky"
